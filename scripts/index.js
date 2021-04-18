@@ -106,6 +106,13 @@ let sprites = {
   },
 };
 
+let zones = {
+  up: [],
+  down: [],
+  left: [],
+  right: [],
+};
+
 function preload() {
   gold = loadImage("assets/images/goldsprites.png");
 }
@@ -127,9 +134,74 @@ function setup() {
   currentPostion = "down";
   currentAction = "stopped";
   currentSprite = 0;
+
+  zones.up = [
+    { x: 0, y: 0 },
+    { x: canvasWidth * 0.5, y: canvasHeight * 0.5 },
+    { x: canvasWidth, y: 0 },
+  ];
+  zones.down = [
+    { x: canvasWidth * 0.5, y: canvasHeight * 0.5 },
+    { x: 0, y: canvasHeight },
+    { x: canvasWidth, y: canvasHeight },
+  ];
+  zones.left = [
+    { x: 0, y: 0 },
+    { x: canvasWidth * 0.5, y: canvasHeight * 0.5 },
+    { x: 0, y: canvasHeight },
+  ];
+  zones.right = [
+    { x: canvasWidth * 0.5, y: canvasHeight * 0.5 },
+    { x: canvasWidth, y: 0 },
+    { x: canvasWidth, y: canvasHeight },
+  ];
 }
 
 function draw() {
+  textSize(40);
+  text("Up", canvasWidth * 0.44, canvasHeight * 0.2);
+  text("Down", canvasWidth * 0.44, canvasHeight * 0.8);
+
+  text("Right", canvasWidth * 0.8, canvasHeight * 0.5);
+  text("Left", canvasWidth * 0.2, canvasHeight * 0.5);
+
+  noFill();
+  triangle(
+    zones.left[0].x,
+    zones.left[0].y,
+    zones.left[1].x,
+    zones.left[1].y,
+    zones.left[2].x,
+    zones.left[0].y
+  );
+
+  triangle(
+    zones.right[0].x,
+    zones.right[0].y,
+    zones.right[1].x,
+    zones.right[1].y,
+    zones.right[2].x,
+    zones.right[2].y
+  );
+
+  triangle(
+    zones.up[0].x,
+    zones.up[0].y,
+    zones.up[1].x,
+    zones.up[1].y,
+    zones.up[2].x,
+    zones.up[2].y
+  );
+
+  triangle(
+    zones.down[0].x,
+    zones.down[0].y,
+    zones.down[1].x,
+    zones.down[1].y,
+    zones.down[2].x,
+    zones.down[2].y
+  );
+
   let spriteWidth = 13;
   let sprinteHeight = 16;
 
@@ -154,32 +226,66 @@ function touchStarted() {
   currentAction = "stopped";
 
   if (
-    mouseX > canvasWidth / 2 &&
-    mouseY > canvasHeight / 2 - 16 * 10 &&
-    mouseY < canvasHeight / 2 + 16 * 10
+    collidePointTriangle(
+      mouseX,
+      mouseY,
+      zones.up[0].x,
+      zones.up[0].y,
+      zones.up[1].x,
+      zones.up[1].y,
+      zones.up[2].x,
+      zones.up[2].y
+    )
   ) {
-    currentPostion = "right";
-    currentAction = "walking";
-    return;
-  }
-
-  if (
-    mouseX < canvasWidth / 2 &&
-    mouseY > canvasHeight / 2 - 16 * 10 &&
-    mouseY < canvasHeight / 2 + 16 * 10
-  ) {
-    currentPostion = "left";
-    currentAction = "walking";
-    return;
-  }
-
-  if (mouseY < canvasHeight / 2) {
     currentPostion = "up";
     currentAction = "walking";
   }
 
-  if (mouseY > canvasHeight / 2) {
+  if (
+    collidePointTriangle(
+      mouseX,
+      mouseY,
+      zones.down[0].x,
+      zones.down[0].y,
+      zones.down[1].x,
+      zones.down[1].y,
+      zones.down[2].x,
+      zones.down[2].y
+    )
+  ) {
     currentPostion = "down";
+    currentAction = "walking";
+  }
+
+  if (
+    collidePointTriangle(
+      mouseX,
+      mouseY,
+      zones.left[0].x,
+      zones.left[0].y,
+      zones.left[1].x,
+      zones.left[1].y,
+      zones.left[2].x,
+      zones.left[2].y
+    )
+  ) {
+    currentPostion = "left";
+    currentAction = "walking";
+  }
+
+  if (
+    collidePointTriangle(
+      mouseX,
+      mouseY,
+      zones.right[0].x,
+      zones.right[0].y,
+      zones.right[1].x,
+      zones.right[1].y,
+      zones.right[2].x,
+      zones.right[2].y
+    )
+  ) {
+    currentPostion = "right";
     currentAction = "walking";
   }
 }
