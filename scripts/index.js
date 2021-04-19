@@ -235,9 +235,6 @@ function touchMoved() {
 }
 
 function touchStarted() {
-  currentPostion = "down";
-  currentAction = "stopped";
-
   if (
     collidePointTriangle(
       mouseX,
