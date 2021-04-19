@@ -113,8 +113,11 @@ let zones = {
   right: [],
 };
 
+let maps = {};
+
 function preload() {
   gold = loadImage("assets/images/goldsprites.png");
+  maps.pallet = loadImage("assets/images/maps/pallet.png");
 }
 
 function setup() {
@@ -158,6 +161,9 @@ function setup() {
 }
 
 function draw() {
+  image(maps.pallet, 0, 0, canvasWidth, canvasHeight, 336, 23, 128, 129);
+
+  fill(0, 0, 0);
   textSize(40);
   text("Up", canvasWidth * 0.44, canvasHeight * 0.2);
   text("Down", canvasWidth * 0.44, canvasHeight * 0.8);
@@ -207,13 +213,15 @@ function draw() {
 
   let sprite = sprites[currentPostion][currentAction][currentSprite];
 
+  let pcWidth = spriteWidth * 7;
+  let pcHeight = sprinteHeight * 7;
+
   image(
     gold, //image source
-
-    canvasWidth / 2 - (spriteWidth * 10) / 2, // x position
-    canvasHeight / 2 - (sprinteHeight * 10) / 2, //y position
-    spriteWidth * 10, // width
-    sprinteHeight * 10, //height
+    canvasWidth / 2 - pcWidth / 2, // x position
+    canvasHeight / 2 - pcHeight / 2, //y position
+    pcWidth, // width
+    pcHeight, //height
     sprite.startX, //currentSprite * spriteWidth + 1, //x image
     sprite.startY, //4, //y image
     sprite.endX, //spriteWidth, //x width
