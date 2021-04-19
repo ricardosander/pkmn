@@ -230,6 +230,10 @@ function draw() {
   updateSprites();
 }
 
+function touchMoved() {
+  touchStarted();
+}
+
 function touchStarted() {
   currentPostion = "down";
   currentAction = "stopped";
