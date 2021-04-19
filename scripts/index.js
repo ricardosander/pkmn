@@ -121,7 +121,7 @@ function preload() {
 }
 
 function setup() {
-  let frameRating = 30;
+  let frameRating = 10;
 
   frameRate(frameRating);
 
@@ -130,9 +130,9 @@ function setup() {
 
   createCanvas(canvasWidth, canvasHeight);
   background(0, 255, 0);
-  setInterval(function () {
-    updateSprites();
-  }, frameRate * 1000);
+  //   setInterval(function () {
+  //     updateSprites();
+  //   }, frameRate * 1000);
 
   currentPostion = "down";
   currentAction = "stopped";
@@ -227,6 +227,7 @@ function draw() {
     sprite.endX, //spriteWidth, //x width
     sprite.endY //sprinteHeight //y width
   );
+  updateSprites();
 }
 
 function touchStarted() {
